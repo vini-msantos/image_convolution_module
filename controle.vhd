@@ -150,7 +150,7 @@ begin
                 if j_254 = '1' then
                     PE <= S2;
                 else
-                    PE <= S4;
+                    PE <= S5;
                 end if;
 
                 mi <= '0';
