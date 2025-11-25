@@ -12,26 +12,36 @@ entity memoria_cache is
 end entity memoria_cache;
 
 architecture arch of memoria_cache is
-    signal memory: PixelMatrix3x3;
+    -- Inicializa com zeros para evitar lixo de memória na simulação
+    signal memory: PixelMatrix3x3 := (others => (others => (others => '0')));
 begin
     output <= memory;
 
     process(clock, reset)
     begin
+        -- Reset Assíncrono (Opicional: Se não usar, pode remover este IF)
         if reset = '1' then
-            
-        elsif rising_edge(clock) and (enable = '1') then
-            memory(0, 0) <= memory(0, 1);
-            memory(1, 0) <= memory(1, 1);
-            memory(2, 0) <= memory(2, 1);
+             memory <= (others => (others => (others => '0')));
+             
+        elsif rising_edge(clock) then
+            -- Mudei o ENABLE para cá (Síncrono). Isso remove o Warning.
+            if (enable = '1') then
+                -- Shift Register (Janela Deslizante)
+                -- Coluna 0 recebe Coluna 1
+                memory(0, 0) <= memory(0, 1);
+                memory(1, 0) <= memory(1, 1);
+                memory(2, 0) <= memory(2, 1);
 
-            memory(0, 1) <= memory(0, 2);
-            memory(1, 1) <= memory(1, 2);
-            memory(2, 1) <= memory(2, 2);
+                -- Coluna 1 recebe Coluna 2
+                memory(0, 1) <= memory(0, 2);
+                memory(1, 1) <= memory(1, 2);
+                memory(2, 1) <= memory(2, 2);
 
-            memory(0, 2) <= in_a;
-            memory(1, 2) <= in_b;
-            memory(2, 2) <= in_c;
+                -- Coluna 2 recebe novos dados
+                memory(0, 2) <= in_a;
+                memory(1, 2) <= in_b;
+                memory(2, 2) <= in_c;
+            end if;
         end if;
     end process;
     
