@@ -2,8 +2,6 @@ library IEEE;
 use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
 use STD.textio.all;
--- Removido o uso de std.env para compatibilidade com VHDL 93
--- use std.env.all; 
 
 entity filter_module_tb is
 end entity filter_module_tb;
@@ -75,8 +73,7 @@ begin
 
         clock <= '1';
         wait for 5 ns;
-
-        -- Leitura do arquivo de entrada
+            
         for i in 0 to 255 loop
             for j in 0 to 255 loop
                 clock <= '0';
@@ -112,10 +109,7 @@ begin
         wait for 5 ns;
         start <= '0';
 
-        -- Loop principal de processamento
         WHIL: while true loop
-            -- ii := ii + 1;
-            -- exit WHIL when ii = 25000;
             exit WHIL when done_r = '1';
             clock <= not clock;
             wait for 5 ns;
@@ -123,7 +117,6 @@ begin
 
         report "finished";
 
-        -- Escrita do arquivo de saída
         for i in 0 to 255 loop
             for j in 0 to 255 loop
                 clock <= not clock;
@@ -132,8 +125,6 @@ begin
                 end_j <= std_logic_vector(to_unsigned(j, 8));
                 
                 wait for 5 ns;
-
-                -- report integer'image(j); -- Comentado para poluir menos o console
 
                 write(line_buffer, to_integer(unsigned(output_r)));
                 writeline(saida, line_buffer);
@@ -147,10 +138,8 @@ begin
             end loop;
         end loop;
 
-        file_close(saida); -- Boa prática: fechar o arquivo de saída
+        file_close(saida);
 
-        -- CORREÇÃO PRINCIPAL ABAIXO:
-        -- Substituindo std.env.finish por assert failure
         assert false report "Simulação Finalizada com Sucesso!" severity failure;
         
         wait;
