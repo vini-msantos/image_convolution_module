@@ -71,11 +71,9 @@ begin
 
         wait for 5 ns;
 
-
-
         clock <= '1';
         wait for 5 ns;
-
+            
         for i in 0 to 255 loop
             for j in 0 to 255 loop
                 clock <= '0';
@@ -111,11 +109,7 @@ begin
         wait for 5 ns;
         start <= '0';
 
-        
         WHIL: while true loop
-            -- ii := ii + 1;
-
-            -- exit WHIL when ii = 25000;
             exit WHIL when done_r = '1';
             clock <= not clock;
             wait for 5 ns;
@@ -132,8 +126,6 @@ begin
                 
                 wait for 5 ns;
 
-                report integer'image(j);
-
                 write(line_buffer, to_integer(unsigned(output_r)));
                 writeline(saida, line_buffer);
                 write(line_buffer, to_integer(unsigned(output_g)));
@@ -146,7 +138,10 @@ begin
             end loop;
         end loop;
 
-        std.env.finish;
+        file_close(saida);
+
+        assert false report "Simulação Finalizada com Sucesso!" severity failure;
+        
         wait;
     end process;
     
