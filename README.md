@@ -19,4 +19,4 @@ Para rodar uma transformação de imagem:
 ```
 4. A imagem resultante será em bitmap no arquivo 'output.txt'.
 
-OBS: utilize os sites [img2list](https://xeltalliv.github.io/ScratchTools/Img2list/#dc1) e [list2image](https://xeltalliv.github.io/ScratchTools/List2img/#dn0) com a opção "decimal new line RGB" para fazer a transformação para e de bitmap.
+OBS: utilize os sites [img2list](https://xeltalliv.github.io/ScratchTools/Img2list/#dc1) e [list2image](https://xeltalliv.github.io/ScratchTools/List2img/#dn0) com a opção "decimal new line RGB" para fazer a transformação para e de bitmap e com a imagem de tamanho 256x256.
